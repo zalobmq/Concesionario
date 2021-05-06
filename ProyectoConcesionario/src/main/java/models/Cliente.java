@@ -8,7 +8,6 @@ public class Cliente {
 	protected int telefono;
 	
 	public Cliente() {
-		
 	}
 	
 	public Cliente(String dni, String nombre, int edad, int telefono) {
@@ -51,6 +50,13 @@ public class Cliente {
 		this.telefono = telefono;
 	}
 	
+	
+	
+	@Override
+	public String toString() {
+		return "Cliente [dni=" + dni + ", nombre=" + nombre + ", edad=" + edad + ", telefono=" + telefono + "]\n";
+	}
+
 	public boolean equals(Object obj) {
 		
 		if(this == obj) {
