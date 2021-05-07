@@ -40,7 +40,7 @@ public class ClienteDAO extends Cliente{
 	
 	public int asignar(String dni,String matricula) {
 		int rs=0;
-		Connection con= Conexion.getConexion();
+		Connection con = Conexion.getConexion(utils.UtilidadXml.loadFile("conexion.xml"));
 		if(con != null) {
 			try {
 				PreparedStatement q = con.prepareStatement(ASIGNAR);
@@ -59,7 +59,7 @@ public class ClienteDAO extends Cliente{
 	public int retirar(String dni,String matricula) {
 		int rs=0;
 		
-		Connection con= Conexion.getConexion();
+		Connection con = Conexion.getConexion(utils.UtilidadXml.loadFile("conexion.xml"));
 		if(con != null) {
 			try {
 				PreparedStatement q = con.prepareStatement(RETIRAR);
@@ -76,7 +76,7 @@ public class ClienteDAO extends Cliente{
 	}
 	public void MostrarInfoCliente (String dni) {
 		
-		Connection con=Conexion.getConexion();
+		Connection con = Conexion.getConexion(utils.UtilidadXml.loadFile("conexion.xml"));
 		Cliente cl= new Cliente();
 
 		
@@ -103,7 +103,7 @@ public class ClienteDAO extends Cliente{
 	
 	public  List<Coche> MostrarCochesCLiente(String dni){
 		List<Coche> result =new ArrayList<Coche>();
-		Connection con= Conexion.getConexion();
+		Connection con = Conexion.getConexion(utils.UtilidadXml.loadFile("conexion.xml"));
 		if(con != null) {
 			
 			try {
@@ -133,7 +133,7 @@ public class ClienteDAO extends Cliente{
 	
 	public  List<Cliente> MostrarTodos(){
 		List<Cliente> result = new ArrayList<Cliente>();
-		Connection con= Conexion.getConexion();
+		Connection con = Conexion.getConexion(utils.UtilidadXml.loadFile("conexion.xml"));
 		if(con != null) {
 			
 			try {
