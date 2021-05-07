@@ -1,5 +1,7 @@
 package menus;
 
+import models.DatosDeConexion;
+
 //import java.util.Scanner;
 
 public class MenuPrincipal {
@@ -25,14 +27,17 @@ public class MenuPrincipal {
 				// Y EJECUTARA LA CLASE SUBMENU CON LA FUNCION ASIGNADA PARA EL MENU DE CLIENTES 
 				Submenu1.MenuPrincipalClientes();
 				break;
-			
 			case 3:
+				System.out.println("Guardando xml...");
+				utils.UtilidadXml.saveFile("conexion.xml", new DatosDeConexion("localhost","concesionario","root",""));
+				break;
+			case 4:
 				System.out.println("### SALIR DEL PROGRAMA ###");
 				break;
 			default:
 				System.out.println("OPCION INCORRECTA , POR FAVOR INSERTE UNA OPCION VALIDA");
 				break;
 			}
-		}while(opcion != 3);
+		}while(opcion != 4);
 		}
 }

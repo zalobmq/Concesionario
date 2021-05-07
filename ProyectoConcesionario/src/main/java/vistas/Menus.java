@@ -11,7 +11,8 @@ public class Menus {
 		System.out.println("");
 		System.out.println("1.- SECCION DE COCHES");
 		System.out.println("2.- SECCION DE CLIENTES");
-		System.out.println("3.- SALIR");
+		System.out.println("3.- GUARDAR XML");
+		System.out.println("4.- SALIR");
 		System.out.println("");
 		
 	}
