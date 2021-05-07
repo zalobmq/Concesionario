@@ -22,6 +22,7 @@ public class CocheDAO  extends Coche{
 	private final static String SELECT_MATRICULA="SELECT * FROM coche WHERE matricula=?";
 	private final static String SELECT_MARCA="SELECT * FROM coche WHERE marca=?";
 	private final static String SELECT_COLOR="SELECT * FROM coche WHERE color=?";
+	private final static String SELECT_ALL_MATRICULAS="SELECT matricula FROM coche";
 
 
 	
@@ -123,6 +124,54 @@ public class CocheDAO  extends Coche{
 			
 		}
 	}
+	
+	public boolean ComprMatriculaExiste(String matricula) {
+		Connection con = Conexion.getConexion();
+		boolean result=false;
+		if(con != null) {
+			
+			List<Coche> listaComprobacionCoches = CocheDAO.listaMatriculas();
+			for (int i=0;i<listaComprobacionCoches.size();i++) {
+				
+				if(listaComprobacionCoches.get(i).getMatricula().equals(matricula)) {
+					
+					//EL COCHE YA EXISTE
+					result=true;	
+				}
+			}
+		}
+		return result;
+	}
+	
+	public boolean ComprSiTienePropPorMatricula(String matricula){
+		Connection con = Conexion.getConexion();
+		boolean result=false;
+		if(con != null) {
+			
+			try {
+				PreparedStatement q = con.prepareStatement(SELECT_MATRICULA);
+				q.setString(1, matricula);
+				ResultSet rs= q.executeQuery();
+					while(rs.next()) {
+						Coche c=new Coche();
+						c.setDniCliente(rs.getString("dni_cliente"));
+						
+						if(c.getDniCliente() != null) {
+							// SI TIENE PROPIETARIO ,BOOLEAN = TRUE
+							result = true;
+						}else {
+							//SI NO BOOLEAN = FALSE
+						}
+					}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return result;
+	}
+	
 	public static List<Coche> mostrarTodosLosCoches(){
 		List<Coche> result = new ArrayList<Coche>();
 		Connection con = Conexion.getConexion();
@@ -261,6 +310,30 @@ public class CocheDAO  extends Coche{
 		}
 		return result;	
 	}
+	private static List<Coche> listaMatriculas(){
+		List<Coche> result = new ArrayList<Coche>();
+		Connection con= Conexion.getConexion();
+		
+		try {
+			PreparedStatement q = con.prepareStatement(SELECT_ALL_MATRICULAS);
+			ResultSet rs= q.executeQuery();
+				while(rs.next()) {
+					Coche c=new Coche();
+					c.setMatricula(rs.getString("matricula"));
+					
+					result.add(c);
+					
+				}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+		return result;
+	}
+	
+	
 	
 	
 	

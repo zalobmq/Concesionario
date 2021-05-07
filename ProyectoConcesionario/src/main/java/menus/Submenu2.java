@@ -11,12 +11,12 @@ public class Submenu2 {
 
 	public static void MenuBusquedaCoche() {
 		
-		Scanner teclado=new Scanner(System.in);
+		//Scanner teclado=new Scanner(System.in);
 		int opcion=0;
-		
+		do {
 		vistas.Menus.MenuCochesBusqueda();
 		System.out.print("OPCION:");
-		opcion=teclado.nextInt();
+		opcion=utils.InsertarPorTeclado.getInt();
 		
 		switch (opcion) {
 		
@@ -47,7 +47,7 @@ public class Submenu2 {
 					System.out.println("### BUSCAR COCHE POR MATRICULA ###");
 					System.out.println("");
 					System.out.print("INSERTA LA MATRICULA: ");
-					BMatricula=teclado.next();
+					BMatricula=utils.InsertarPorTeclado.getString();
 					CocheDAO Bc= new CocheDAO();
 					Bc.mostarMatricula(BMatricula);
 					
@@ -58,7 +58,7 @@ public class Submenu2 {
 					System.out.println("### FILTRADO POR MARCA ###");
 					System.out.println("");
 					System.out.print("INSERTA LA MARCA: ");
-					BMarca=teclado.next();
+					BMarca=utils.InsertarPorTeclado.getString();
 					List<Coche> Mc=CocheDAO.mostarMarca(BMarca);
 					System.out.println(Mc);
 					
@@ -69,7 +69,7 @@ public class Submenu2 {
 				System.out.println("### FILTRADO POR COLOR ###");
 				System.out.println("");
 				System.out.print("INSERTA EL COLOR: ");
-				BColor=teclado.next();
+				BColor=utils.InsertarPorTeclado.getString();
 				List<Coche> Cc=CocheDAO.mostarColor(BColor);
 				System.out.println(Cc);
 				
@@ -78,6 +78,10 @@ public class Submenu2 {
 				System.out.println("");
 				System.out.println("VOLVIENDO AL MENU DE COCHES...");
 				break;
+			default:
+				System.out.println("OPCION INCORRECTA , POR FAVOR INSERTE UNA OPCION VALIDA");
+				break;
 		}
+		}while(opcion != 7);
 	}
 }

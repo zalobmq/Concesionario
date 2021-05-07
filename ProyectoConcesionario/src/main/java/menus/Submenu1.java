@@ -12,12 +12,12 @@ public class Submenu1 {
 	
 	//MENU DE COCHES 
 	public static void MenuPrincipalCoches() {
-		Scanner teclado=new Scanner(System.in);
+		//Scanner teclado=new Scanner(System.in);
 		int opcion=0;
-		
+		do {
 		vistas.Menus.MenuCoches();
 		System.out.print("OPCION: ");
-		opcion=teclado.nextInt();
+		opcion=utils.InsertarPorTeclado.getInt();
 		
 		switch (opcion) {
 		
@@ -27,19 +27,30 @@ public class Submenu1 {
 				int potencia;
 				String color;
 				double precio;
+				boolean ComprobacionM;
+				int llave=0;
 				System.out.println("");
+				do {
 				System.out.println("### CREAR Y AÑADIR COCHE ###");
 				System.out.println("");
 				System.out.print("MATRICULA: ");
-				matricula=teclado.next();
+				matricula=utils.InsertarPorTeclado.getString();
+				CocheDAO cCompM= new CocheDAO();
+				ComprobacionM=cCompM.ComprMatriculaExiste(matricula);
+				if(ComprobacionM) {
+					//COMPROBACION ES TRUE ->  HAY COCHE CON ESA MATRICULA
+					System.out.println("YA EXISTE UN COCHE CON ESTA MATRICULA");	
+				}
+				}while(ComprobacionM);
+
 				System.out.print("MARCA: ");
-				marca=teclado.next();
+				marca=utils.InsertarPorTeclado.getString();
 				System.out.print("POTENCIA:");
-				potencia=teclado.nextInt();
+				potencia=utils.InsertarPorTeclado.getInt();
 				System.out.print("COLOR: ");
-				color=teclado.next();
+				color=utils.InsertarPorTeclado.getString();
 				System.out.print("PRECIO: ");
-				precio=teclado.nextDouble();
+				precio=utils.InsertarPorTeclado.getDouble();
 				System.out.println("");
 				System.out.println("COCHE AÑADIDO");
 				CocheDAO c= new CocheDAO(matricula, marca, potencia, color, precio);
@@ -48,14 +59,31 @@ public class Submenu1 {
 			
 			case 2:
 				String matriculaEliminar;
+				boolean Comprobacion;
 				System.out.println("");
 				System.out.println("### ELIMINAR COCHE ###");
 				System.out.println("");
 				System.out.print("MATRICULA DEL COCHE: ");
-				matriculaEliminar=teclado.next();
+				matriculaEliminar=utils.InsertarPorTeclado.getString();
+				CocheDAO cComp= new CocheDAO();
 				CocheDAO cB= new CocheDAO();
-				cB.eliminar(matriculaEliminar);
-				System.out.println("COCHE ELIMINADO");
+				//BUSCAR EL VEHICULO POR AL MATRICULA Y COMPROBAR SI TIENE PROPIETARIO O NO
+				Comprobacion=cComp.ComprSiTienePropPorMatricula(matriculaEliminar);
+
+				if(Comprobacion) {
+					System.out.println("ESTE VEHICULO PERTENECE A UN CLIENTE , NO SE PUEDE BORRAR");
+				}else {
+					cB.eliminar(matriculaEliminar);
+					System.out.println("COCHE ELIMINADO");
+				}
+				/*
+				if() {
+					System.out.println("ESTE VEHICULO PERTENECE A UN CLIENTE , NO SE PUEDE BORRAR");
+				}else {
+					cB.eliminar(matriculaEliminar);
+					System.out.println("COCHE ELIMINADO");
+				}
+				*/
 				break;
 				
 			case 3:
@@ -66,19 +94,24 @@ public class Submenu1 {
 			case 4:
 				System.out.println("VOLVIENDO AL MENU PRINCIPAL...");
 				break;
+			default:
+				System.out.println("OPCION INCORRECTA , POR FAVOR INSERTE UNA OPCION VALIDA");
+				break;
+			
 				
 		}
+		}while(opcion != 4);
 	}
 	
 	//MENU DE CLIENTES
 	public static void MenuPrincipalClientes() {
 	
-		Scanner teclado=new Scanner(System.in);
+		//Scanner teclado=new Scanner(System.in);
 		int opcion=0;
-		
+		do {
 		vistas.Menus.MenuClientes();
 		System.out.print("OPCION: ");
-		opcion=teclado.nextInt();
+		opcion=utils.InsertarPorTeclado.getInt();
 		
 			switch(opcion) {
 			
@@ -89,9 +122,9 @@ public class Submenu1 {
 					System.out.println("### ASIGNAR COCHE ###");
 					System.out.println("");
 					System.out.print("DNI DEL CLIENTE: ");
-					ADni=teclado.next();
+					ADni=utils.InsertarPorTeclado.getString();
 					System.out.print("MATRICULA DEL COCHE: ");
-					AMatricula=teclado.next();
+					AMatricula=utils.InsertarPorTeclado.getString();
 					
 						ClienteDAO clA= new ClienteDAO();
 						clA.asignar(ADni, AMatricula);
@@ -107,9 +140,9 @@ public class Submenu1 {
 					System.out.println("### ASIGNAR COCHE ###");
 					System.out.println("");
 					System.out.print("DNI DEL CLIENTE: ");
-					RDni=teclado.next();
+					RDni=utils.InsertarPorTeclado.getString();
 					System.out.print("MATRICULA DEL COCHE: ");
-					RMatricula=teclado.next();
+					RMatricula=utils.InsertarPorTeclado.getString();
 					
 						ClienteDAO clR= new ClienteDAO();
 						clR.retirar(RDni, RMatricula);
@@ -131,7 +164,7 @@ public class Submenu1 {
 					System.out.println("### COCHES DE CLIENTE ###");
 					System.out.println("");
 					System.out.print("INSERTA EL DNI DEL CLIENTE: ");
-					CCDni=teclado.next();
+					CCDni=utils.InsertarPorTeclado.getString();
 					List<Coche> ListaCochClien = new ClienteDAO().MostrarCochesCLiente(CCDni);
 					System.out.println("");
 					System.out.println("Mostrando coches del cliente con DNI: "+CCDni);
@@ -144,7 +177,7 @@ public class Submenu1 {
 					System.out.println("### INFO CLIENTE ###");
 					System.out.println("");
 					System.out.print("INSERTA EL DNI DEL CLIENTE: ");
-					IDni=teclado.next();
+					IDni=utils.InsertarPorTeclado.getString();
 					ClienteDAO clI=new ClienteDAO();
 					System.out.println();
 					System.out.println("Mostrando info del cliente con DNI: "+IDni);
@@ -154,8 +187,12 @@ public class Submenu1 {
 				case 6:
 					System.out.println("VOLVIENDO AL MENU PRINCIPAL...");
 					break;
+				default:
+					System.out.println("OPCION INCORRECTA , POR FAVOR INSERTE UNA OPCION VALIDA");
+					break;
 					
 			}
+		}while(opcion != 6);
 		
 	}
 }

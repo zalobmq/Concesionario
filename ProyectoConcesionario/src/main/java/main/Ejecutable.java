@@ -56,6 +56,8 @@ public class Ejecutable {
 	//cl.asignar("12345678E", "5643H");
 	//System.out.println(c1);
 	MenuPrincipal.MenuPrincipal();
+	//List<Coche> listaComprobacionCoches = CocheDAO.ComprMatriculaExiste("9999E");
+	//System.out.println(listaComprobacionCoches);
 	}
 
 }
