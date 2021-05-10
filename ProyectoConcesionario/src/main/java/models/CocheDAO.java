@@ -95,7 +95,8 @@ public class CocheDAO  extends Coche{
 	
 	public int eliminar(String matricula) {
 		int rs=0;
-		Connection con = Conexion.getConexion(utils.UtilidadXml.loadFile("conexion.xml"));		if(con != null) {
+		Connection con = Conexion.getConexion(utils.UtilidadXml.loadFile("conexion.xml"));
+		if(con != null) {
 			try {
 				PreparedStatement q = con.prepareStatement(DELETE);
 				q.setString(1, matricula);
@@ -115,7 +116,8 @@ public class CocheDAO  extends Coche{
 		return rs;
 	}
 	public  void mostarMatricula(String matricula){
-		Connection con = Conexion.getConexion(utils.UtilidadXml.loadFile("conexion.xml"));		if(con != null) {
+		Connection con = Conexion.getConexion(utils.UtilidadXml.loadFile("conexion.xml"));
+		if(con != null) {
 			
 			try {
 				PreparedStatement q = con.prepareStatement(SELECT_MATRICULA);
