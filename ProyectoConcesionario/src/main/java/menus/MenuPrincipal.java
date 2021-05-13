@@ -30,7 +30,7 @@ public class MenuPrincipal {
 				break;
 			case 3:
 				System.out.println("Guardando xml...");
-				UtilidadXml.saveFile("com.Gonzalo.conexion.xml", new DatosDeConexion("localhost","concesionario","root",""));
+				UtilidadXml.saveFile("conexion.xml", new DatosDeConexion("localhost","concesionario","root",""));
 				break;
 			case 4:
 				System.out.println("### SALIR DEL PROGRAMA ###");
