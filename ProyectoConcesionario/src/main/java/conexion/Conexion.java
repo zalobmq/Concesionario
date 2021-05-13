@@ -1,5 +1,4 @@
 package conexion;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -9,16 +8,12 @@ import models.DatosDeConexion;
 public class Conexion {
 
 	private static Connection con;
-	//PROYECTO ESTO DEBE IR EN UN XML
-	
-	
 	 public static Connection conectar(DatosDeConexion c) throws SQLException {
 	        Connection conn;
 	        if (c == null) {
 	            return null;
 	        }
 	        conn = DriverManager.getConnection("jdbc:mysql://" + c.getServer() + "/" + c.getDatabase(), c.getUsername(), c.getPassword());
-	        //checkStructure(conn);
 	        return conn;
 	    }
 	public static Connection getConexion(DatosDeConexion c) {

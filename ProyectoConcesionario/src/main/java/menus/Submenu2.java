@@ -6,6 +6,8 @@ import java.util.Scanner;
 import models.ClienteDAO;
 import models.Coche;
 import models.CocheDAO;
+import utils.InsertarPorTeclado;
+import vistas.Menus;
 
 public class Submenu2 {
 
@@ -14,9 +16,9 @@ public class Submenu2 {
 		//Scanner teclado=new Scanner(System.in);
 		int opcion=0;
 		do {
-		vistas.Menus.MenuCochesBusqueda();
+		Menus.MenuCochesBusqueda();
 		System.out.print("OPCION:");
-		opcion=utils.InsertarPorTeclado.getInt();
+		opcion= InsertarPorTeclado.getInt();
 		
 		switch (opcion) {
 		
@@ -47,7 +49,7 @@ public class Submenu2 {
 					System.out.println("### BUSCAR COCHE POR MATRICULA ###");
 					System.out.println("");
 					System.out.print("INSERTA LA MATRICULA: ");
-					BMatricula=utils.InsertarPorTeclado.getString();
+					BMatricula= InsertarPorTeclado.getString();
 					CocheDAO Bc= new CocheDAO();
 					Bc.mostarMatricula(BMatricula);
 					
@@ -58,7 +60,7 @@ public class Submenu2 {
 					System.out.println("### FILTRADO POR MARCA ###");
 					System.out.println("");
 					System.out.print("INSERTA LA MARCA: ");
-					BMarca=utils.InsertarPorTeclado.getString();
+					BMarca= InsertarPorTeclado.getString();
 					List<Coche> Mc=CocheDAO.mostarMarca(BMarca);
 					System.out.println(Mc);
 					
@@ -69,7 +71,7 @@ public class Submenu2 {
 				System.out.println("### FILTRADO POR COLOR ###");
 				System.out.println("");
 				System.out.print("INSERTA EL COLOR: ");
-				BColor=utils.InsertarPorTeclado.getString();
+				BColor= InsertarPorTeclado.getString();
 				List<Coche> Cc=CocheDAO.mostarColor(BColor);
 				System.out.println(Cc);
 				

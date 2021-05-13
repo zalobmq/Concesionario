@@ -1,4 +1,8 @@
+
+
 package models;
+
+import java.util.List;
 
 public class Cliente {
 
@@ -6,6 +10,7 @@ public class Cliente {
 	protected String nombre;
 	protected int edad;
 	protected int telefono;
+	protected List<Coche> misCoches;
 	
 	public Cliente() {
 	}
@@ -48,6 +53,14 @@ public class Cliente {
 
 	public void setTelefono(int telefono) {
 		this.telefono = telefono;
+	}
+
+	public void setMisCoches(List<Coche> coches){
+		this.misCoches=coches;
+	}
+
+	public List<Coche> getMisCoches(){
+		return this.misCoches;
 	}
 	
 	

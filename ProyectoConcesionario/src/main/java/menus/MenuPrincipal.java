@@ -1,8 +1,9 @@
 package menus;
 
 import models.DatosDeConexion;
-
-//import java.util.Scanner;
+import utils.InsertarPorTeclado;
+import utils.UtilidadXml;
+import vistas.Menus;
 
 public class MenuPrincipal {
 
@@ -10,9 +11,9 @@ public class MenuPrincipal {
 	//	Scanner teclado=new Scanner(System.in);
 		int opcion=0;
 		do {
-		vistas.Menus.MenuPresentacion();
+		Menus.MenuPresentacion();
 		System.out.print("OPCION:");
-		opcion=utils.InsertarPorTeclado.getInt();
+		opcion= InsertarPorTeclado.getInt();
 		switch(opcion) {
 		
 			case 1:
@@ -29,7 +30,7 @@ public class MenuPrincipal {
 				break;
 			case 3:
 				System.out.println("Guardando xml...");
-				utils.UtilidadXml.saveFile("conexion.xml", new DatosDeConexion("localhost","concesionario","root",""));
+				UtilidadXml.saveFile("com.Gonzalo.conexion.xml", new DatosDeConexion("localhost","concesionario","root",""));
 				break;
 			case 4:
 				System.out.println("### SALIR DEL PROGRAMA ###");

@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import conexion.Conexion;
+import utils.UtilidadXml;
 
 public class CocheDAO  extends Coche{
 
-	//SENTENCIAS 
+    //SENTENCIAS SQL
 	
 	private final static String INSERT="INSERT INTO coche (matricula,marca,potencia,color,precio,dni_cliente)"
 			+ "VALUES (?,?,?,?,?,NULL)";
@@ -29,16 +30,16 @@ public class CocheDAO  extends Coche{
 	
 	public CocheDAO () {
 		try {
-			con=Conexion.conectar(utils.UtilidadXml.loadFile("conexion.xml"));
+			con= Conexion.conectar(UtilidadXml.loadFile("conexion.xml"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	public CocheDAO (String matricula, String marca, int potencia, String color, double precio,String dniCliente) {
-	super(matricula,marca,potencia,color,precio,dniCliente);
+	public CocheDAO (String matricula, String marca, int potencia, String color, double precio,Cliente cliente) {
+	super(matricula,marca,potencia,color,precio,cliente);
 	try {
-		con=Conexion.conectar(utils.UtilidadXml.loadFile("conexion.xml"));
+		con=Conexion.conectar(UtilidadXml.loadFile("conexion.xml"));
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -48,7 +49,7 @@ public class CocheDAO  extends Coche{
 	public CocheDAO (String matricula, String marca, int potencia, String color ,double precio) {
 		super(matricula,marca,potencia,color,precio);
 		try {
-			con=Conexion.conectar(utils.UtilidadXml.loadFile("conexion.xml"));
+			con=Conexion.conectar(UtilidadXml.loadFile("conexion.xml"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -63,7 +64,7 @@ public class CocheDAO  extends Coche{
 		this.potencia = c.potencia;
 		this.color = c.color;
 		this.precio = c.precio;
-		this.dniCliente=c.dniCliente;
+		this.cliente = c.cliente;
 		
 	}
 	public CocheDAO(String matricula) {
@@ -73,7 +74,7 @@ public class CocheDAO  extends Coche{
 	
 	public int añadir() {
 		int result = 0;
-		Connection con = Conexion.getConexion(utils.UtilidadXml.loadFile("conexion.xml"));
+		Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
 		if(con != null) {
 			
 			try {
@@ -95,7 +96,7 @@ public class CocheDAO  extends Coche{
 	
 	public int eliminar(String matricula) {
 		int rs=0;
-		Connection con = Conexion.getConexion(utils.UtilidadXml.loadFile("conexion.xml"));
+		Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
 		if(con != null) {
 			try {
 				PreparedStatement q = con.prepareStatement(DELETE);
@@ -116,7 +117,7 @@ public class CocheDAO  extends Coche{
 		return rs;
 	}
 	public  void mostarMatricula(String matricula){
-		Connection con = Conexion.getConexion(utils.UtilidadXml.loadFile("conexion.xml"));
+		Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
 		if(con != null) {
 			
 			try {
@@ -130,7 +131,7 @@ public class CocheDAO  extends Coche{
 						c.setPotencia(rs.getInt("potencia"));
 						c.setColor(rs.getString("color"));
 						c.setPrecio(rs.getDouble("precio"));
-						c.setDniCliente(rs.getString("dni_cliente"));
+						c.setCliente(ClienteDAO.getClientePorDNI(rs.getString("dni_cliente")));
 						
 						System.out.println(c);
 						
@@ -144,7 +145,7 @@ public class CocheDAO  extends Coche{
 	}
 	
 	public boolean ComprMatriculaExiste(String matricula) {
-		Connection con = Conexion.getConexion(utils.UtilidadXml.loadFile("conexion.xml"));
+		Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
 		boolean result=false;
 		if(con != null) {
 			
@@ -162,7 +163,7 @@ public class CocheDAO  extends Coche{
 	}
 	
 	public boolean ComprSiTienePropPorMatricula(String matricula){
-		Connection con = Conexion.getConexion(utils.UtilidadXml.loadFile("conexion.xml"));
+		Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
 		boolean result=false;
 		if(con != null) {
 			
@@ -172,9 +173,9 @@ public class CocheDAO  extends Coche{
 				ResultSet rs= q.executeQuery();
 					while(rs.next()) {
 						Coche c=new Coche();
-						c.setDniCliente(rs.getString("dni_cliente"));
+						c.setCliente(ClienteDAO.getClientePorDNI(rs.getString("dni_cliente")));
 						
-						if(c.getDniCliente() != null) {
+						if(c.getCliente() != null) {
 							// SI TIENE PROPIETARIO ,BOOLEAN = TRUE
 							result = true;
 						}else {
@@ -192,7 +193,7 @@ public class CocheDAO  extends Coche{
 	
 	public static List<Coche> mostrarTodosLosCoches(){
 		List<Coche> result = new ArrayList<Coche>();
-		Connection con = Conexion.getConexion(utils.UtilidadXml.loadFile("conexion.xml"));
+		Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
 		if(con != null) {
 			
 			try {
@@ -205,7 +206,7 @@ public class CocheDAO  extends Coche{
 						c.setPotencia(rs.getInt("potencia"));
 						c.setColor(rs.getString("color"));
 						c.setPrecio(rs.getDouble("precio"));
-						c.setDniCliente(rs.getString("dni_cliente"));
+						c.setCliente(ClienteDAO.getClientePorDNI(rs.getString("dni_cliente")));
 						
 						result.add(c);
 						
@@ -221,7 +222,7 @@ public class CocheDAO  extends Coche{
 	
 	public static List<Coche> mostrarCochesSinPropietario(){
 		List<Coche> result = new ArrayList<Coche>();
-		Connection con = Conexion.getConexion(utils.UtilidadXml.loadFile("conexion.xml"));		
+		Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
 		if(con != null) {
 			try {
 				PreparedStatement q = con.prepareStatement(SELECT_COCHES_SIN_PROPIETARIO);
@@ -233,7 +234,7 @@ public class CocheDAO  extends Coche{
 					c.setPotencia(rs.getInt("potencia"));
 					c.setColor(rs.getString("color"));
 					c.setPrecio(rs.getDouble("precio"));
-					c.setDniCliente(rs.getString("dni_cliente"));
+					c.setCliente(ClienteDAO.getClientePorDNI(rs.getString("dni_cliente")));
 					
 					result.add(c);
 				}
@@ -247,7 +248,7 @@ public class CocheDAO  extends Coche{
 	public static List<Coche> mostrarCochesConPropietario(){
 
 		List<Coche> result = new ArrayList<Coche>();
-		Connection con = Conexion.getConexion(utils.UtilidadXml.loadFile("conexion.xml"));		
+		Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
 		if(con != null) {
 			try {
 				PreparedStatement q = con.prepareStatement(SELECT_COCHES_CON_PROPIETARIO);
@@ -259,7 +260,7 @@ public class CocheDAO  extends Coche{
 					c.setPotencia(rs.getInt("potencia"));
 					c.setColor(rs.getString("color"));
 					c.setPrecio(rs.getDouble("precio"));
-					c.setDniCliente(rs.getString("dni_cliente"));
+					c.setCliente(ClienteDAO.getClientePorDNI(rs.getString("dni_cliente")));
 					
 					result.add(c);
 				}
@@ -274,7 +275,7 @@ public class CocheDAO  extends Coche{
 	
 	public static List<Coche> mostarMarca(String marca){
 		List<Coche> result = new ArrayList<Coche>();
-		Connection con = Conexion.getConexion(utils.UtilidadXml.loadFile("conexion.xml"));		
+		Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
 		if(con != null) {
 			try {
 				PreparedStatement q = con.prepareStatement(SELECT_MARCA);
@@ -287,7 +288,7 @@ public class CocheDAO  extends Coche{
 					c.setPotencia(rs.getInt("potencia"));
 					c.setColor(rs.getString("color"));
 					c.setPrecio(rs.getDouble("precio"));
-					c.setDniCliente(rs.getString("dni_cliente"));
+					c.setCliente(ClienteDAO.getClientePorDNI(rs.getString("dni_cliente")));
 					
 					result.add(c);
 				}
@@ -300,7 +301,7 @@ public class CocheDAO  extends Coche{
 	}
 	public static List<Coche> mostarColor(String color){
 		List<Coche> result = new ArrayList<Coche>();
-		Connection con = Conexion.getConexion(utils.UtilidadXml.loadFile("conexion.xml"));		
+		Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
 		if(con != null) {
 			try {
 				PreparedStatement q = con.prepareStatement(SELECT_COLOR);
@@ -313,7 +314,7 @@ public class CocheDAO  extends Coche{
 					c.setPotencia(rs.getInt("potencia"));
 					c.setColor(rs.getString("color"));
 					c.setPrecio(rs.getDouble("precio"));
-					c.setDniCliente(rs.getString("dni_cliente"));
+					c.setCliente(ClienteDAO.getClientePorDNI(rs.getString("dni_cliente")));
 					
 					result.add(c);
 				}
@@ -326,7 +327,7 @@ public class CocheDAO  extends Coche{
 	}
 	private static List<Coche> listaMatriculas(){
 		List<Coche> result = new ArrayList<Coche>();
-		Connection con = Conexion.getConexion(utils.UtilidadXml.loadFile("conexion.xml"));		
+		Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
 		try {
 			PreparedStatement q = con.prepareStatement(SELECT_ALL_MATRICULAS);
 			ResultSet rs= q.executeQuery();
@@ -345,9 +346,6 @@ public class CocheDAO  extends Coche{
 	
 		return result;
 	}
-	
-	
-	
 	
 	
 }

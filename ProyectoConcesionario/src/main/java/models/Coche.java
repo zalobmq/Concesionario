@@ -7,19 +7,19 @@ public class Coche {
 	protected int potencia;
 	protected String color;
 	protected double precio;
-	protected String dniCliente="";
+	protected Cliente cliente;
 	
 	public Coche() {
 		
 	}
-	public Coche(String matricula, String marca, int potencia, String color, double precio,String dniCliente) {
+	public Coche(String matricula, String marca, int potencia, String color, double precio, Cliente cliente) {
 		super();
 		this.matricula = matricula;
 		this.marca = marca;
 		this.potencia = potencia;
 		this.color = color;
 		this.precio = precio;
-		this.dniCliente = dniCliente;
+		this.cliente = cliente;
 	}
 	
 
@@ -73,16 +73,16 @@ public class Coche {
 	
 	
 	
-	public String getDniCliente() {
-		return dniCliente;
+	public Cliente getCliente() {
+		return cliente;
 	}
-	public void setDniCliente(String dniCliente) {
-		this.dniCliente = dniCliente;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 	@Override
 	public String toString() {
 		return "Coche: matricula=" + matricula + " | marca=" + marca + " | potencia=" + potencia + "cv | color=" + color
-				+ " | precio=" + precio +" | DNI del Propietario: "+dniCliente +"\n";
+				+ " | precio=" + precio +" | Propietario: "+cliente.toString() +"\n";
 	}
 	@Override
 	public boolean equals(Object obj) {

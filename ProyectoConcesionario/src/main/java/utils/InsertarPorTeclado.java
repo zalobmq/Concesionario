@@ -42,7 +42,7 @@ public class InsertarPorTeclado {
 		double result = 0;
         boolean valid = false;
         do {
-            try {	//Integer.parse(teclado.nextLine());
+            try {	
                 result = Double.parseDouble(teclado.nextLine());
                 valid = true;
             } catch (IllegalStateException ex) {
