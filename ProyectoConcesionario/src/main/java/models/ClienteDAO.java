@@ -20,8 +20,11 @@ public class ClienteDAO extends Cliente {
     private final static String SELECT_INFO_CLIENTE = "SELECT * FROM cliente WHERE dni=?";
     private final static String SELECT_ALL_CLIENTE = "SELECT * FROM cliente";
 
-    //---
+
     
+
+    //CONSTRUCTORES
+
     
     public ClienteDAO() {
 
@@ -42,6 +45,16 @@ public class ClienteDAO extends Cliente {
         this.edad = cl.edad;
         this.telefono = cl.telefono;
     }
+    
+    //METODOS
+
+    
+    /*
+     * Asignar:
+     * 
+     * Recibe el dni del cliente y la matricula del coche.
+     * Asignara el coche al cliente.
+     * */
 
     public int asignar(String dni, String matricula) {
         int rs = 0;
@@ -61,6 +74,13 @@ public class ClienteDAO extends Cliente {
         return rs;
     }
 
+    /*
+     * Retirar:
+     * 
+     * Recibe el dni del cliente y la matricula del coche.
+     * Retirara el coche al cliente.
+     * */
+    
     public int retirar(String dni, String matricula) {
         int rs = 0;
 
@@ -79,7 +99,12 @@ public class ClienteDAO extends Cliente {
         }
         return rs;
     }
-
+    /*
+     * MostrarInfoCliente:
+     * 
+     * Recibe el dni del cliente.
+     * Devolvera la informacion de dicho cliente.
+     * */
     public void MostrarInfoCliente(String dni) {
 
         Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
@@ -106,7 +131,13 @@ public class ClienteDAO extends Cliente {
 
         System.out.println(cl);
     }
-
+    /*
+     * getClientePorDNI:
+     * 
+     * Recibe el dni del cliente.
+     * Devolvera un ClienteDAO.
+     * */
+    
     public static ClienteDAO getClientePorDNI(String dni) {
 
         Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
@@ -136,6 +167,13 @@ public class ClienteDAO extends Cliente {
 
 
     @Override
+    
+    /*
+     * getMisCoches:
+     * 
+     * Devolvera la lista de coches de un cliente.
+     * */
+    
     public List<Coche> getMisCoches() {
         List<Coche> result = super.getMisCoches();
         if (result == null) {
@@ -165,7 +203,13 @@ public class ClienteDAO extends Cliente {
         }
         return result;
     }
-
+    
+    /*
+     * MostrarTodos
+     * 
+     * Devolvera una lista con la informacion de todos los clientes.
+     * */
+    
     public List<Cliente> MostrarTodos() {
         List<Cliente> result = new ArrayList<Cliente>();
         Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));

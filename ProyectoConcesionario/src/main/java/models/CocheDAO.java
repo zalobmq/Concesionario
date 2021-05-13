@@ -25,7 +25,8 @@ public class CocheDAO  extends Coche{
 	private final static String SELECT_COLOR="SELECT * FROM coche WHERE color=?";
 	private final static String SELECT_ALL_MATRICULAS="SELECT matricula FROM coche";
 
-	//--
+    //CONSTRUCTORES
+
 	Connection con;
 	
 	public CocheDAO () {
@@ -72,6 +73,13 @@ public class CocheDAO  extends Coche{
 		this.matricula=matricula;
 	}
 	
+    //METODOS
+
+	/*
+	 * añadir
+	 * 
+	 * Inserta un coche en la base de datos.
+	 * */
 	public int añadir() {
 		int result = 0;
 		Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
@@ -93,7 +101,12 @@ public class CocheDAO  extends Coche{
 		}
 		return result;
 	}
-	
+	/*
+	 * eliminar:
+	 * 
+	 * Recibe una matricula de coche.
+	 * Borra un coche de la base de datos.
+	 * */
 	public int eliminar(String matricula) {
 		int rs=0;
 		Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
@@ -116,6 +129,12 @@ public class CocheDAO  extends Coche{
 		}
 		return rs;
 	}
+	/*
+	 * mostarMatricula:
+	 * 
+	 * Recibe la matricula de un coche.
+	 * Imprime la informacion del coche.
+	 * */
 	public  void mostarMatricula(String matricula){
 		Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
 		if(con != null) {
@@ -143,7 +162,12 @@ public class CocheDAO  extends Coche{
 			
 		}
 	}
-	
+	/*
+	 * ComprMatriculaExiste:
+	 * 
+	 * Recibe la matricula de un coche.
+	 * Comprueba si la matricula existe en listaMatriculas.
+	 * */
 	public boolean ComprMatriculaExiste(String matricula) {
 		Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
 		boolean result=false;
@@ -161,7 +185,12 @@ public class CocheDAO  extends Coche{
 		}
 		return result;
 	}
-	
+	/*
+	 * ComprSiTienePropPorMatricula:
+	 * 
+	 * Recibe la matricula de un coche.
+	 * Comprueba si el coche tiene propietario.
+	 * */
 	public boolean ComprSiTienePropPorMatricula(String matricula){
 		Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
 		boolean result=false;
@@ -173,13 +202,11 @@ public class CocheDAO  extends Coche{
 				ResultSet rs= q.executeQuery();
 					while(rs.next()) {
 						Coche c=new Coche();
-						c.setCliente(ClienteDAO.getClientePorDNI(rs.getString("dni_cliente")));
-						
-						if(c.getCliente() != null) {
-							// SI TIENE PROPIETARIO ,BOOLEAN = TRUE
+						Object o=rs.getObject("dni_cliente");
+						if(o != null) {
+							c.setCliente(ClienteDAO.getClientePorDNI(rs.getString("dni_cliente")));
 							result = true;
-						}else {
-							//SI NO BOOLEAN = FALSE
+							
 						}
 					}
 			} catch (SQLException e) {
@@ -190,6 +217,12 @@ public class CocheDAO  extends Coche{
 		}
 		return result;
 	}
+	
+	/*
+	 * mostrarTodosLosCoches:
+	 *
+	 * Devuelbe una lista de todos los coches.
+	 * */
 	
 	public static List<Coche> mostrarTodosLosCoches(){
 		List<Coche> result = new ArrayList<Coche>();
@@ -220,6 +253,12 @@ public class CocheDAO  extends Coche{
 		return result;
 	}
 	
+	/*
+	 * mostrarCochesSinPropietario:
+	 *
+	 * Devuelbe una lista de todos los coches sin propietario.
+	 * */
+	
 	public static List<Coche> mostrarCochesSinPropietario(){
 		List<Coche> result = new ArrayList<Coche>();
 		Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
@@ -245,6 +284,13 @@ public class CocheDAO  extends Coche{
 		}
 		return result;
 	}
+	
+	/*
+	 * mostrarCochesConPropietario:
+	 *
+	 * Devuelbe una lista de todos los coches con propietario.
+	 * */
+	
 	public static List<Coche> mostrarCochesConPropietario(){
 
 		List<Coche> result = new ArrayList<Coche>();
@@ -273,6 +319,12 @@ public class CocheDAO  extends Coche{
 	
 	}
 	
+	/*
+	 * mostarMarca:
+	 * Recibe la marca de coche
+	 * Devuelbe una lista de todos los coches de esa marca.
+	 * */
+	
 	public static List<Coche> mostarMarca(String marca){
 		List<Coche> result = new ArrayList<Coche>();
 		Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
@@ -299,6 +351,13 @@ public class CocheDAO  extends Coche{
 		}
 		return result;	
 	}
+	
+	/*
+	 * mostarColor:
+	 * Recibe el color de coche
+	 * Devuelbe una lista de todos los coches de ese color.
+	 * */
+	
 	public static List<Coche> mostarColor(String color){
 		List<Coche> result = new ArrayList<Coche>();
 		Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));
@@ -325,6 +384,14 @@ public class CocheDAO  extends Coche{
 		}
 		return result;	
 	}
+	
+	/*
+	 * listaMatriculas:
+	 * 
+	 * Devuelbe una lista de todas las matriculas de los coches 
+	 * que existen en la base de datos.
+	 * */
+	
 	private static List<Coche> listaMatriculas(){
 		List<Coche> result = new ArrayList<Coche>();
 		Connection con = Conexion.getConexion(UtilidadXml.loadFile("conexion.xml"));

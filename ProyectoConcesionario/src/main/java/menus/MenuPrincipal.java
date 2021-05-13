@@ -7,8 +7,12 @@ import vistas.Menus;
 
 public class MenuPrincipal {
 
+	/*
+	 * MENU PRINCIPAL
+	 * 
+	 * Es el que se muestra al ejecutar nuestro programa
+	 * */
 	public static void MenuPrincipal() {
-	//	Scanner teclado=new Scanner(System.in);
 		int opcion=0;
 		do {
 		Menus.MenuPresentacion();
@@ -18,24 +22,25 @@ public class MenuPrincipal {
 		
 			case 1:
 				
-				//AQUI MOSTRARA EL MENU DE COCHES 
-				// Y EJECUTARA LA CLASE SUBMENU CON LA FUNCION ASIGNADA PARA EL MENU DE COCHES 
+				//MOSTRARA EL MENU DE COCHES 
 				Submenu1.MenuPrincipalCoches();
 				break;
 				
 			case 2:
-				//AQUI MOSTRARA EL MENU DE CLIENTES 
-				// Y EJECUTARA LA CLASE SUBMENU CON LA FUNCION ASIGNADA PARA EL MENU DE CLIENTES 
+				//MOSTRARA EL MENU DE CLIENTES 
 				Submenu1.MenuPrincipalClientes();
 				break;
 			case 3:
+				//Guardara el XML
 				System.out.println("Guardando xml...");
 				UtilidadXml.saveFile("conexion.xml", new DatosDeConexion("localhost","concesionario","root",""));
 				break;
 			case 4:
+				//SALDRA DEL PROGRAMA
 				System.out.println("### SALIR DEL PROGRAMA ###");
 				break;
 			default:
+				//Se ejecutara al introducir una opcion no valida
 				System.out.println("OPCION INCORRECTA , POR FAVOR INSERTE UNA OPCION VALIDA");
 				break;
 			}
